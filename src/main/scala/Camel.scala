@@ -21,7 +21,7 @@ object CamelMain {
 
   object routeBuilder extends RouteBuilder {
     override def configure {
-      from("direct:start").setHeader("name").body().to("scalate:templates/sample.ssp")
+      from("direct:start").setHeader("name",body()).to("scalate:templates/sample.ssp")
     }
   }
 }
