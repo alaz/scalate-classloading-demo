@@ -1,5 +1,12 @@
-Run:
+Build:
 
 pre. mvn assembly:directory
 cd target/scalate-classloading-demo-1.0.0-SNAPSHOT-dist/scalate-classloading-demo-1.0.0-SNAPSHOT/
-./start.sh
+
+And run:
+
+pre. ./cmd.sh
+
+or
+
+pre. ./camel.sh
