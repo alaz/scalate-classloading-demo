@@ -1,5 +1,7 @@
 package com.osinka.scalate.classloading.demo.app
 
+import collection.JavaConversions.asJavaMap
+import org.apache.camel.CamelContext
 import org.apache.camel.impl.DefaultCamelContext
 import org.apache.camel.builder.RouteBuilder
 
@@ -15,8 +17,23 @@ object CamelMain {
     val context = new DefaultCamelContext
     context.disableJMX
     context.addRoutes(routeBuilder)
+
+    // will not work without this:
+    initScalate(context)
+
     context.start
     context
+  }
+
+  def initScalate(context: CamelContext) {
+    import org.fusesource.scalate.camel.ScalateComponent
+    import org.fusesource.scalate.util.FileResourceLoader
+
+    Option( context.getComponent("scalate") ) foreach {
+      case scalateComponent: ScalateComponent =>
+        scalateComponent.templateEngine.allowReload = false
+        scalateComponent.templateEngine.resourceLoader = FileResourceLoader()
+    }
   }
 
   object routeBuilder extends RouteBuilder {
